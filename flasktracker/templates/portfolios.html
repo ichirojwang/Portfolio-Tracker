@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% set active_page = "My Portfolios" %}
+{% set title = active_page %}
+{% set portfolios = current_user.portfolios %}
+{% block content %}
+    <div class="content-box">
+        <h2>{{ current_user.name }}'s Portfolio</h2>
+    </div>
+    {% for port in portfolios %}
+        <a class="content-box content-box-hover flex-row justify-content-between align-items-center text-decoration-none text-body"
+           href="{{ url_for('portfolio', port_id=port.id) }}">
+            <h3>{{ port.name }}</h3>
+            <div class="d-flex flex-column align-items-end">
+                <span class="fs-5">Value</span>
+                <span>{{ format_pl(port.total_mkt_value).get("value") }}</span>
+            </div>
+        </a>
+    {% endfor %}
+    {% if not portfolios %}
+        <div class="content-box">
+            <span class="fs-5">You currently do not have any portfolios.</span>
+        </div>
+    {% endif %}
+    <div class="content-box content-box-dashed">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <h2>Create Portfolio</h2>
+            {% set form_control = "form-control" %}
+            <div class="w-50 mt-2">
+                {% set name_class = form_control + (" is-invalid" if form.name.errors else "") %}
+                {% set attribs = {'aria-label': 'name input'} %}
+                {{ form.name(class=name_class, **attribs) }}
+                <div class="invalid-feedback">
+                    {% for error in form.name.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {{ form.submit(class="btn btn-dark mt-2") }}
+        </form>
+    </div>
+{% endblock content %}

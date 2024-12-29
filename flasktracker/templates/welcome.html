@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+{% set active_page = "Welcome" %}
+{% set title = active_page %}
+{% set hide_nav = True %}
+{% block links %}
+    <link rel="stylesheet" href="{{ url_for("static", filename="welcome.css") }}">
+    <script defer src="{{ url_for('static', filename='welcome.js') }}"></script>
+{% endblock links %}
+{% block content %}
+    <div class="landing">
+        <h1>Loonie Ledger</h1>
+
+        <div class="row center-both desc-and-logo">
+            <div class="desc col-12 col-md-9">
+                <h2>
+                    Track your investment portfolio.
+                </h2>
+                <p>
+                    Loonie Ledger is a tool tailored for Canadian investors,
+                    empowering them to make informed investment decisions by keeping
+                    close track of their stock portfolio.
+                </p>
+
+                <div class="suli">
+                    <a class="btn btn-outline-dark" id="login" href="{{ url_for('login') }}">Log In</a>
+                    <a class="btn btn-outline-dark" id="signup" href="{{ url_for('signup') }}">Sign Up</a>
+                    <!-- <a  class="link-slide" id="continue" href="./home.html">Continue without an account</a> -->
+                </div>
+            </div>
+            <div class="logo col-md-3 d-none d-md-block">
+                <img id="rect-logo" src="{{ url_for('static', filename='img/logo-1.png') }}" alt="">
+            </div>
+        </div>
+
+
+        <div class="stock-slider" id="stock-slider">
+            <div class="stock">
+                <p class="arrow"></p>
+                <div class="details">
+                    <p class="ticker">GOOGL</p>
+                    <p class="market">171.29</p>
+                </div>
+                <div class="movement">
+                    <p class="percent">0.11</p>
+                    <p class="amount">0.18</p>
+                </div>
+            </div>
+            <div class="stock">
+                <p class="arrow"></p>
+                <div class="details">
+                    <p class="ticker">AMZN</p>
+                    <p class="market">197.01</p>
+                </div>
+                <div class="movement">
+                    <p class="percent">-0.46</p>
+                    <p class="amount">-0.92</p>
+                </div>
+            </div>
+            <div class="stock">
+                <p class="arrow"></p>
+                <div class="details">
+                    <p class="ticker">NVDA</p>
+                    <p class="market">135.40</p>
+                </div>
+                <div class="movement">
+                    <p class="percent">1.99</p>
+                    <p class="amount">2.64</p>
+                </div>
+            </div>
+            <div class="stock">
+                <p class="arrow"></p>
+                <div class="details">
+                    <p class="ticker">INTL</p>
+                    <p class="market">23.20</p>
+                </div>
+                <div class="movement">
+                    <p class="percent">7.81</p>
+                    <p class="amount">1.68</p>
+                </div>
+            </div>
+            <div class="stock">
+                <p class="arrow"></p>
+                <div class="details">
+                    <p class="ticker">AAPL</p>
+                    <p class="market">222.91</p>
+                </div>
+                <div class="movement">
+                    <p class="percent">-1.33</p>
+                    <p class="amount">-3.00</p>
+                </div>
+            </div>
+            <div class="stock">
+                <p class="arrow"></p>
+                <div class="details">
+                    <p class="ticker">TSLA</p>
+                    <p class="market">248.98</p>
+                </div>
+                <div class="movement">
+                    <p class="percent">-0.35</p>
+                    <p class="amount">-0.87</p>
+                </div>
+            </div>
+            <div class="stock">
+                <p class="arrow"></p>
+                <div class="details">
+                    <p class="ticker">AMD</p>
+                    <p class="market">141.86</p>
+                </div>
+                <div class="movement">
+                    <p class="percent">-1.53</p>
+                    <p class="amount">-2.21</p>
+                </div>
+            </div>
+            <div class="stock">
+                <p class="arrow"></p>
+                <div class="details">
+                    <p class="ticker">UBER</p>
+                    <p class="market">73.25</p>
+                </div>
+                <div class="movement">
+                    <p class="percent">1.67</p>
+                    <p class="amount">1.20</p>
+                </div>
+            </div>
+            <div class="stock">
+                <p class="arrow"></p>
+                <div class="details">
+                    <p class="ticker">DIS</p>
+                    <p class="market">95.81</p>
+                </div>
+                <div class="movement">
+                    <p class="percent">-0.41</p>
+                    <p class="amount">-0.39</p>
+                </div>
+            </div>
+            <div class="stock">
+                <p class="arrow"></p>
+                <div class="details">
+                    <p class="ticker">COST</p>
+                    <p class="market">877.31</p>
+                </div>
+                <div class="movement">
+                    <p class="percent">0.49</p>
+                    <p class="amount">4.29</p>
+                </div>
+            </div>
+        </div>
+        <small class="text-muted">*The above data is not real time data.</small>
+    </div>
+{% endblock content %}

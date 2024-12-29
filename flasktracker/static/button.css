@@ -1,0 +1,45 @@
+@property --turn {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+}
+
+.button-conic {
+    color: black;
+    text-decoration: none;
+    width: 5em;
+    height: 3em;
+    border-radius: 0.8em;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.button-conic::after {
+    position: absolute;
+    width: 107%;
+    height: 112%;
+    border-radius: 1em;
+    content: "";
+    background-color: #39FF14;
+    background-image: conic-gradient(#39FF14 var(--turn), black var(--turn));
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+}
+
+.button-conic:hover::after {
+    animation: spin 1s forwards 1 ease;
+}
+
+@keyframes spin {
+    from {
+        --turn: 0deg;
+    }
+    to {
+        --turn: 360deg;
+    }
+}

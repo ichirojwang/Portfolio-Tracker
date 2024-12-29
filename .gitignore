@@ -1,3 +1,2 @@
-Constants.py
-logs
-*.log
+.idea
+__pycache__

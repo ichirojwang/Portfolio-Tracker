@@ -1,0 +1,191 @@
+:root {
+    --children: 8;
+    --child-width: 12em;
+    --sliderwidth: 62vw;
+    --sliderheight: 5em;
+    --bg: snow;
+    --lightred: rgba(252, 232, 230, 255);
+    --red: rgba(201, 49, 45, 255);
+    --lightgreen: rgba(230, 244, 234, 255);
+    --green: rgba(19, 115, 51, 255);
+    --buttonwidth: 5em;
+    --buttonheight: 3em;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    margin: 0;
+    background-color: var(--bg);
+    z-index: 0;
+}
+
+.landing {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+}
+
+h1, h2, p {
+    margin: 0;
+}
+
+.desc-and-logo {
+    /*border: 1px solid black;*/
+    width: var(--sliderwidth);
+}
+
+.desc {
+    /*border: 1px solid black;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    gap: 2em;
+    align-items: center;
+    padding: 3em;
+    z-index: 99;
+}
+
+
+.suli {
+    /*border: 1px solid black;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+
+.suli p {
+    font-size: 0.95em;
+}
+
+.logo {
+    /*border: 1px solid black;*/
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+#rect-logo {
+    width: 96%;
+    object-fit: contain;
+    border-radius: 2px;
+    z-index: 2;
+}
+
+.stock-slider {
+    /*border: 1px solid black;*/
+    display: flex;
+    width: var(--sliderwidth);
+    height: var(--sliderheight);
+    position: relative;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 1) 6%, rgba(0, 0, 0, 1) 94%, rgba(0, 0, 0, 0) 98%);
+    cursor: default;
+    user-select: none;
+    margin: 20px 0;
+}
+
+.stock {
+    /*border: 1px blue solid;*/
+    border: 2px solid lightgray;
+    background-color: white;
+    border-radius: 10px;
+    height: var(--sliderheight);
+    width: var(--child-width);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    position: absolute;
+    animation-name: slide;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+}
+
+.stock p {
+    font-size: 0.8em;
+    text-align: center;
+}
+
+.stock .arrow {
+    font-size: 2em;
+    width: 1em;
+    aspect-ratio: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    border-radius: 4px;
+    font-weight: bolder;
+}
+
+.up {
+    background-color: var(--lightgreen);
+    color: var(--green);
+}
+
+.up::before {
+    content: "￪";
+}
+
+.down {
+    background-color: var(--lightred);
+    color: var(--red);
+}
+
+.down::before {
+    content: "￬";
+}
+
+.details {
+    width: 3em;
+}
+
+.ticker {
+    font-weight: bold;
+}
+
+.market::before {
+    content: "$";
+}
+
+.movement {
+    border-radius: 4px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.percent::after {
+    content: "%";
+}
+
+.pos::before {
+    content: "$";
+}
+
+.neg::before {
+    content: "-$";
+}
+
+.stock-slider:hover .stock {
+    animation-play-state: paused;
+}
+
+@keyframes slide {
+    to {
+        left: calc(-1 * var(--child-width));
+    }
+}
+
+
+
+

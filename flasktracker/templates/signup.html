@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% set active_page = "Sign Up" %}
+{% set title = active_page %}
+{% set hide_nav = True %}
+{% block content %}
+    <div class="row h-100 gap-5 center-both">
+        <img class="col-lg-4 d-none d-lg-block object-fit-contain"
+             src="{{ url_for('static', filename='img/logo-1.png') }}" alt="Logo">
+        <div class="col-9 col-lg-4 content-box">
+            <h2>Sign Up</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {{ render_flashed_messages(messages) }}
+            {% endwith %}
+            <form action="" method="POST" class="needs-validation w-100" novalidate>
+                {{ form.hidden_tag() }}
+                <fieldset>
+                    {% set form_control = "form-control" %}
+                    <div class="mb-2">
+                        {{ form.name.label(class="form-label") }}
+                        {% set name_class = form_control + (" is-invalid" if form.name.errors else "") %}
+                        {{ form.name(class=name_class) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        {{ form.email.label(class="form-label") }}
+                        {% set email_class = form_control + (" is-invalid" if form.email.errors else "") %}
+                        {{ form.email(class=email_class) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        {{ form.password.label(class="form-label") }}
+                        {% set password_class = form_control + (" is-invalid" if form.password.errors else "") %}
+                        {{ form.password(class=password_class) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        {{ form.confirm_password.label(class="form-label") }}
+                        {% set confirm_password_class = form_control + (" is-invalid" if form.confirm_password.errors else "") %}
+                        {{ form.confirm_password(class=confirm_password_class) }}
+                        <div class="invalid-feedback">
+                            {% for error in form.confirm_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="center-both flex-column border-top mt-3 pt-3">
+                    {{ form.submit(class="btn btn-outline-dark") }}
+                    <small class="mt-2">Already have an account? <a href="{{ url_for('login') }}">Log In</a></small>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

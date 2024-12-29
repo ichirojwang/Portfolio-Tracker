@@ -1,0 +1,19 @@
+{% macro render_flashed_messages(messages) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} center-both text-center mt-2 w-100">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}
+
+{% macro render_error_messages(errors) %}
+    {% if errors %}
+        <div class="invalid-feedback">
+            {% for error in errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endmacro %}

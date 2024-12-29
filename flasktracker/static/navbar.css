@@ -1,0 +1,35 @@
+:root {
+    --bg: snow;
+    --red: rgba(201, 49, 45, 255);
+    --green: rgb(9, 115, 0);
+}
+
+.custom-navbar {
+    background-color: snow;
+}
+
+.navbar-brand img {
+    transform: rotate(0deg);
+    transition: 80ms all;
+}
+
+.navbar-brand:hover img {
+    transform: rotate(6deg) scale(1.07);
+}
+
+.custom-nav-link {
+    --b: 3px solid transparent;
+    border-top: var(--b);
+    border-bottom: var(--b);
+    width: max-content;
+    --bs-nav-link-font-weight: bold;
+    --bs-nav-link-hover-color: var(--green);
+}
+
+.custom-navbar .nav-link.active {
+    color: var(--green);
+}
+
+.custom-navbar .nav-link:hover {
+    border-bottom-color: var(--green);
+}

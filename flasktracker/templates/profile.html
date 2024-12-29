@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% set active_page = "Profile" %}
+{% set title = active_page %}
+{% block content %}
+    <div class="content-box">
+        <h2>Details for {{ current_user.name }}</h2>
+        <span class="fs-5">You have been using Loonie Ledger
+            since {{ current_user.start_date.strftime('%B %d, %Y') }}</span>
+    </div>
+    <div class="content-box">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <h2>Profile Details</h2>
+            <div class="row">
+                {% set form_control = "form-field form-control" %}
+                <div class="col-md-4 mt-2">
+                    <label class="mb-1 fs-5">{{ form.name.label }}</label>
+                    {% set name_class = form_control + (" is-invalid" if form.name.errors else "") %}
+                    {% set attribs = {'aria-label': 'name input'} %}
+                    {{ form.name(class=name_class, value=current_user.name, disabled=True, readonly=True, **attribs) }}
+                    {{ render_error_messages(form.name.errors) }}
+                </div>
+                <div class="col-md-4 mt-2">
+                    <label class="mb-1 fs-5">{{ form.email.label }}</label>
+                    {% set email_class = form_control + (" is-invalid" if form.email.errors else "") %}
+                    {% set attribs = {'aria-label': 'email input'} %}
+                    {{ form.email(class=email_class, value=current_user.email, disabled=True, readonly=True, **attribs) }}
+                    {{ render_error_messages(form.email.errors) }}
+                </div>
+            </div>
+            <div class="d-flex gap-2 mt-2">
+                <button type="button" id="btnEdit" class="btn btn-dark">
+                    Edit Profile
+                </button>
+                <button type="button" id="btnCancel" class="btn btn-outline-secondary hidden">
+                    Cancel
+                </button>
+                {{ form.submit(class="btn btn-dark hidden", id="btnConfirm") }}
+            </div>
+        </form>
+    </div>
+    <div class="content-box">
+        <form method="POST" action="{{ url_for('update_profile_year') }}">
+            {{ form.hidden_tag() }}
+            <h2>Year of Eligibility</h2>
+            {% set form_control = "form-field-year form-control" %}
+            <div class="col-md-4 mt-2">
+                {#                <label class="mb-1 fs-4">{{ year_form.year.label }}</label>#}
+                {% set year_class = form_control + (" is-invalid" if year_form.year.errors else "") %}
+                {% set year_value = current_user.year_eligible if current_user.year_eligible else None %}
+                {% set attribs = {'aria-label': 'year input'} %}
+                {{ year_form.year(class=year_class, value=year_value, disabled=True, readonly=True, **attribs) }}
+                {{ render_error_messages(year_form.year.errors) }}
+            </div>
+            <div class="d-flex gap-2 mt-2 mb-1">
+                <button type="button" id="btnEditYear" class="btn btn-dark">
+                    Edit Year
+                </button>
+                <button type="button" id="btnCancelYear" class="btn btn-outline-secondary hidden">
+                    Cancel
+                </button>
+                {{ year_form.submit(class="btn btn-dark hidden", id="btnConfirmYear") }}
+            </div>
+            <small>*This number is used to calculate your TFSA limit. Please visit the official
+                <a target="_blank"
+                   href="https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/tax-free-savings-account/contributions.html#toc1">
+                    CRA website</a>
+                to learn more.</small>
+        </form>
+    </div>
+{% endblock content %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename='profile.js') }}"></script>
+{% endblock scripts %}

@@ -1,0 +1,143 @@
+:root {
+    --bg: snow;
+    --spacer: 1rem;
+    --lightred: rgb(255, 205, 201);
+    --lightgreen: rgb(210, 255, 205);
+}
+
+body {
+    /*border: 5px solid blue;*/
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg);
+}
+
+h1, h2, p, a {
+    margin: 0;
+    padding: 0;
+}
+
+.btn {
+    border-radius: 50rem;
+}
+
+.pad-x {
+    padding-left: calc(var(--spacer) * 7);
+    padding-right: calc(var(--spacer) * 7);
+}
+
+.custom-dropdown {
+    --bs-dropdown-min-width: fit-content;
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+.width-ctrl {
+    max-width: 1600px;
+}
+
+.center-both {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
+
+.content-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    border: 2px solid grey;
+    border-radius: 0.25rem;
+    padding: 1.5rem;
+    gap: 0.5rem;
+    margin-bottom: calc(var(--spacer) * 0.5);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2);
+    transition: box-shadow 100ms linear;
+}
+
+.content-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content-box-hover:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.content-box-dashed {
+    border-style: dashed;
+}
+
+.hidden {
+    display: none;
+}
+
+.btn-img {
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    appearance: none;
+    background-color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+}
+
+.btn-img:hover {
+    background-color: lightgray;
+}
+
+th, td {
+    vertical-align: middle;
+    padding: calc(var(--spacer) * 0.5) 0 !important;
+}
+
+th:not(:nth-child(1)), td:not(:nth-child(1)) {
+    text-align: right;
+}
+
+.date-invalid {
+    border-color: red;
+}
+
+.cell-hl {
+    border-radius: 50rem !important;
+    padding: calc(var(--spacer) * 0.25) calc(var(--spacer) * 0.75);
+    width: fit-content;
+}
+
+.pos {
+    background-color: var(--lightgreen);
+}
+
+.neg {
+    background-color: var(--lightred);
+}
+
+.dropdown-options {
+    display: flex;
+    justify-content: end;
+}
+
+.table-nested {
+    font-size: calc(1rem * 0.8);
+}
+
+
+
+
+
+
+
+
