@@ -10,6 +10,9 @@
 - Live tracking of stock prices and portfolio performance.
 - Transaction management, including records of buying/selling stocks and profit/loss calculations.
 ## Tech Stack
-### Backend: - Python, Flask, SQLAlchemy
-### Frontend: - Jinja, Bootstrap, JavaScript
-### Database: - PostgreSQL
+### Backend: 
+- Python, Flask, SQLAlchemy
+### Frontend: 
+- Jinja, Bootstrap, JavaScript
+### Database: 
+- PostgreSQL
