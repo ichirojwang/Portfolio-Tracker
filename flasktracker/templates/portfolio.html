@@ -203,7 +203,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form class="transaction-form" id="transactionForm" method="POST"
-                      action="{{ url_for("portfolio_transaction") }}">
+                      action="{{ url_for("portfolios.portfolio_transaction") }}">
                     {{ transaction_form.hidden_tag() }}
                     <input type="hidden" id="port_id_t" name="port_id" value="{{ port.id }}">
                     <div class="modal-body row row-cols-3">
@@ -249,7 +249,7 @@
                     <h1 class="modal-title fs-5" id="editModalLabel">Edit Portfolio Name</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form method="POST" action="{{ url_for("update_portfolio_name") }}">
+                <form method="POST" action="{{ url_for("portfolios.update_portfolio_name") }}">
                     {{ port_name_form.hidden_tag() }}
                     <input type="hidden" id="port_id_e" name="port_id" value="{{ port.id }}">
                     <div class="modal-body">
@@ -278,7 +278,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <form method="POST" action="{{ url_for("delete_portfolio") }}">
+                    <form method="POST" action="{{ url_for("portfolios.delete_portfolio") }}">
                         <input type="hidden" id="port_id_d" name="port_id" value="{{ port.id }}">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
@@ -300,7 +300,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <form method="POST" action="{{ url_for("delete_stock") }}">
+                    <form method="POST" action="{{ url_for("portfolios.delete_stock") }}">
                         <input type="hidden" id="port_id_ds" name="port_id" value="{{ port.id }}">
                         <input type="hidden" id="stock_id" name="stock_id">
                         <button type="submit" class="btn btn-danger">Delete</button>
@@ -323,7 +323,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <form method="POST" action="{{ url_for("delete_transaction") }}">
+                    <form method="POST" action="{{ url_for("portfolios.delete_transaction") }}">
                         <input type="hidden" id="port_id_dt" name="port_id" value="{{ port.id }}">
                         <input type="hidden" id="t_id_del" name="t_id">
                         <button type="submit" class="btn btn-danger">Delete</button>
@@ -341,7 +341,8 @@
                     <h1 class="modal-title fs-5" id="editTransactionModalLabel">Edit Transaction</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form class="transaction-form" id="editForm" method="POST" action="{{ url_for("edit_transaction") }}">
+                <form class="transaction-form" id="editForm" method="POST"
+                      action="{{ url_for("portfolios.edit_transaction") }}">
                     <div class="modal-body">
                         {{ edit_form.hidden_tag() }}
                         <input type="hidden" id="port_id_et" name="port_id" value="{{ port.id }}">

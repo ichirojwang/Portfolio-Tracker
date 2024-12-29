@@ -42,9 +42,10 @@
                 <div class="center-both flex-column border-top mt-3 pt-3">
                     <div class="d-flex center-both">
                         {{ form.submit(class="btn btn-outline-dark") }}
-                        <small class="ms-2"><a href="{{ url_for('login') }}">Forgot Password?</a></small>
+                        <small class="ms-2"><a href="{{ url_for('users.login') }}">Forgot Password?</a></small>
                     </div>
-                    <small class="mt-2">Don't have an account? <a href="{{ url_for('signup') }}">Sign Up</a></small>
+                    <small class="mt-2">Don't have an account? <a href="{{ url_for('users.signup') }}">Sign
+                        Up</a></small>
                 </div>
             </form>
         </div>

@@ -40,7 +40,7 @@
         </form>
     </div>
     <div class="content-box">
-        <form method="POST" action="{{ url_for('update_profile_year') }}">
+        <form method="POST" action="{{ url_for('users.update_profile_year') }}">
             {{ form.hidden_tag() }}
             <h2>Year of Eligibility</h2>
             {% set form_control = "form-field-year form-control" %}

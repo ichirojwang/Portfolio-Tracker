@@ -8,7 +8,7 @@
     </div>
     {% for port in portfolios %}
         <a class="content-box content-box-hover flex-row justify-content-between align-items-center text-decoration-none text-body"
-           href="{{ url_for('portfolio', port_id=port.id) }}">
+           href="{{ url_for('portfolios.portfolio', port_id=port.id) }}">
             <h3>{{ port.name }}</h3>
             <div class="d-flex flex-column align-items-end">
                 <span class="fs-5">Value</span>
