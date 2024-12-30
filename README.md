@@ -27,7 +27,7 @@
 
 ### Database:
 
-- PostgreSQL
+- PostgreSQL (Production), SQLite (Early Development and Testing)
 
 ## Unit Testing
 
