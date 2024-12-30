@@ -35,7 +35,7 @@
                 <th class="d-none d-xl-table-cell">Avg Price</th>
                 <th class="d-none d-lg-table-cell">Mkt Price</th>
                 <th class="d-none d-lg-table-cell">Book Value</th>
-                <th>Mkt Value</th>
+                <th class="d-none d-sm-table-cell">Mkt Value</th>
                 <th class="pe-2">Gain</th>
                 <th class="d-none d-sm-table-cell pe-2">Gain %</th>
                 <th class="d-none d-md-table-cell pe-2">Day Gain</th>
@@ -52,7 +52,7 @@
                     <td class="d-none d-xl-table-cell">{{ format_dollar(stock.avg_price) }}</td>
                     <td class="d-none d-lg-table-cell">{{ format_dollar(stock.mkt_price) }}</td>
                     <td class="d-none d-lg-table-cell">{{ format_dollar(stock.open_cost_basis) }}</td>
-                    <td>{{ format_dollar(stock.mkt_value) }}</td>
+                    <td class="d-none d-sm-table-cell">{{ format_dollar(stock.mkt_value) }}</td>
                     <td class="ps-1">
                         {% set open_pl = format_pl(stock.open_pl) %}
                         <span class="cell-hl {{ open_pl.get("direction") }}">
