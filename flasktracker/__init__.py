@@ -22,9 +22,11 @@ def create_app(config_class=Config):
 
     from flasktracker.users.routes import users
     from flasktracker.portfolios.routes import portfolios
+    from flasktracker.errors.handlers import errors
     from flasktracker.main.routes import main
     app.register_blueprint(users)
     app.register_blueprint(portfolios)
+    app.register_blueprint(errors)
     app.register_blueprint(main)
 
     from flasktracker.portfolios.utils import round_not_whole, format_dollar, format_pl, format_percent
