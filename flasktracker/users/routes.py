@@ -51,7 +51,9 @@ def login():
 
 @users.route('/')
 def send_home():
-    return redirect(url_for('users.home'))
+    if current_user.is_authenticated:
+        return redirect(url_for('users.home'))
+    return redirect(url_for('main.welcome'))
 
 
 @users.route('/home')

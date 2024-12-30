@@ -9,7 +9,7 @@ from flasktracker.portfolios.models import Portfolio
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(user_id)
+    return db.session.get(User, user_id)
 
 
 class User(db.Model, UserMixin):
@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
     year_eligible: Mapped[int] = db.Column(db.Integer)
     start_date: Mapped[datetime] = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
-    portfolios: Mapped[list['Portfolio']] = db.relationship(backref='owner', lazy=True,
+    portfolios: Mapped[list['Portfolio']] = db.relationship('Portfolio', back_populates='owner', lazy=True,
                                                             cascade='all, delete-orphan',
                                                             order_by="Portfolio.start_date")
 
@@ -31,6 +31,10 @@ class User(db.Model, UserMixin):
         self.email = email
         self.password = password
         self.year_eligible = year_eligible
+
+    @property
+    def total_mkt_value(self):
+        return sum(port.total_mkt_value for port in self.portfolios)
 
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.name}', '{self.email}', '{self.password}', {self.year_eligible})"
