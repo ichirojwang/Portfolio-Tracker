@@ -14,8 +14,10 @@ class Portfolio(db.Model):
     name: Mapped[str] = db.Column(db.String(80), nullable=False)
     start_date: Mapped[datetime] = db.Column(db.DateTime, nullable=False, default=datetime.now)
     user_id: Mapped[int] = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    owner = db.relationship('User', back_populates='portfolios')
 
-    stocks: Mapped[list['Stock']] = db.relationship(backref='portfolio', lazy=True, cascade='all, delete-orphan')
+    stocks: Mapped[list['Stock']] = db.relationship('Stock', back_populates='portfolio', lazy=True,
+                                                    cascade='all, delete-orphan')
 
     @property
     def total_mkt_value(self):
@@ -49,17 +51,23 @@ class StockWrapper(db.Model):
     date_cache: Mapped[datetime] = db.Column(db.DateTime)
     market_change_percent_cache: Mapped[float] = db.Column(db.Float)
 
-    stocks: Mapped[list['Stock']] = db.relationship(backref='wrapper', lazy=True, cascade='all, delete-orphan')
+    stocks: Mapped[list['Stock']] = db.relationship('Stock', back_populates='wrapper', lazy=True,
+                                                    cascade='all, delete-orphan')
 
     def __init__(self, ticker: str):
         self.ticker = ticker
 
     def __update_cache(self) -> None:
-        if not self.date_cache or self.date_cache < datetime.now() - timedelta(hours=8):
+        if self.date_cache is None or self.date_cache < datetime.now() - timedelta(hours=5):
             data = get_price(self.ticker)
-            self.market_cache = data.get("market")
-            self.market_change_percent_cache = data.get("change")
-            self.date_cache = datetime.now()
+            if data is None:
+                self.market_cache = 0
+                self.market_change_percent_cache = 0
+                self.date_cache = datetime.now()
+            else:
+                self.market_cache = data.get("market")
+                self.market_change_percent_cache = data.get("change")
+                self.date_cache = datetime.now()
             db.session.commit()
 
     @property
@@ -89,10 +97,13 @@ class Stock(db.Model):
     sector: Mapped[str] = db.Column(db.String(10), nullable=False, default="")
 
     portfolio_id: Mapped[int] = db.Column(db.Integer, db.ForeignKey('portfolios.id'), nullable=False)
-    stock_wrapper_id: Mapped[int] = db.Column(db.Integer, db.ForeignKey('stock_wrappers.id'), nullable=False)
+    portfolio: Mapped['Portfolio'] = db.relationship('Portfolio', back_populates='stocks')
 
-    transactions: Mapped[list['StockTransaction']] = db.relationship(backref='stock', lazy=True,
-                                                                     cascade='all, delete-orphan',
+    stock_wrapper_id: Mapped[int] = db.Column(db.Integer, db.ForeignKey('stock_wrappers.id'), nullable=False)
+    wrapper: Mapped['StockWrapper'] = db.relationship('StockWrapper', back_populates='stocks')
+
+    transactions: Mapped[list['StockTransaction']] = db.relationship('StockTransaction', back_populates='stock',
+                                                                     lazy=True, cascade='all, delete-orphan',
                                                                      order_by='desc(StockTransaction.date)')
 
     def __init__(self, ticker: str, stock_wrapper_id: int, portfolio_id: int):
@@ -179,6 +190,7 @@ class StockTransaction(db.Model):
     fees: Mapped[float] = db.Column(db.Float, default=0)
 
     stock_id: Mapped[int] = db.Column(db.Integer, db.ForeignKey('stocks.id'), nullable=False)
+    stock: Mapped['Stock'] = db.relationship('Stock', back_populates='transactions')
 
     def __init__(self, trans_type: StockTransactionType, date: datetime, ticker: str, quantity: float, price: float,
                  fees: float, stock_id: int):

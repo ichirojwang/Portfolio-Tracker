@@ -22,7 +22,8 @@ class CreatePortfolioForm(FlaskForm):
 class PortfolioTransactionForm(FlaskForm):
     type = SelectField("Type",
                        choices=[(StockTransactionType.BUY.value, 'Buy'), (StockTransactionType.SELL.value, 'Sell')])
-    ticker = StringField("Ticker", validators=[DataRequired(), Length(max=20)], render_kw={"placeholder": "Ticker"})
+    ticker = StringField("Ticker", validators=[DataRequired(), Length(max=20)],
+                         render_kw={"placeholder": ".TO for TSX"})
     date = DateTimeField("Date", validators=[DataRequired()], format="%Y-%m-%d",
                          render_kw={"placeholder": "yyyy-mm-dd", "type": "date",
                                     "value": datetime.now().strftime("%Y-%m-%d")})
