@@ -6,7 +6,6 @@
 }
 
 body {
-    /*border: 5px solid blue;*/
     height: 100vh;
     margin: 0;
     display: flex;
@@ -130,8 +129,16 @@ th:not(:nth-child(1)), td:not(:nth-child(1)) {
     justify-content: end;
 }
 
+.table, .table-nested {
+    table-layout: fixed;
+}
+
 .table-nested {
     font-size: calc(1rem * 0.8);
+}
+
+th:last-child, td:last-child {
+    width: calc(var(--spacer) * 2);
 }
 
 
