@@ -2,6 +2,7 @@ import pytest
 
 from flasktracker import create_app, db, bcrypt
 from flasktracker.config import TestConfig
+from flasktracker.portfolios.models import Portfolio
 from flasktracker.users.models import User
 
 
@@ -15,14 +16,20 @@ class AuthActions:
     def create(self):
         with self.client.application.app_context():
             hashed_password = bcrypt.generate_password_hash(self.password).decode('utf-8')
-            test_user = User(self.name, self.email, hashed_password)
-            test_user_2 = User("John Doe", "johndoe@gmail.com", hashed_password)
-            db.session.add(test_user)
-            db.session.add(test_user_2)
+            user_1 = User("LeBron James", "lebron@gmail.com", hashed_password)
+            user_2 = User("John Doe", "johndoe@gmail.com", hashed_password)
+            db.session.add(user_1)
+            db.session.add(user_2)
             db.session.commit()
+
+    def create_port(self, name):
+        return self.client.post('/portfolio/all', data={"name": name})
 
     def login(self):
         return self.client.post('/login', data={"email": self.email, "password": self.password})
+
+    def login_john(self):
+        return self.client.post('/login', data={"email": "johndoe@gmail.com", "password": self.password})
 
     def logout(self):
         return self.client.get('/logout')
