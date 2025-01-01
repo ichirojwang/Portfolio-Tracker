@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% set active_page = "Error" %}
 {% set title = active_page %}
+{% set hide_nav = (not current_user.is_authenticated) %}
 {% block content %}
-    <div class="content-box">
-        <h2>Error ({{ errno }})</h2>
-        <p>{{ msg }}</p>
-    </div>
+    <h2>Error ({{ errno }})</h2>
+    <p>{{ msg }}</p>
+    <p>Return <a href="{{ url_for('users.send_home') }}">home</a>.</p>
 {% endblock content %}
