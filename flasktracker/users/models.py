@@ -36,5 +36,17 @@ class User(db.Model, UserMixin):
     def total_mkt_value(self):
         return sum(port.total_mkt_value for port in self.portfolios)
 
+    @property
+    def total_open_cost_basis(self):
+        return sum(port.total_open_cost_basis for port in self.portfolios)
+
+    @property
+    def total_open_pl(self):
+        return sum(port.total_open_pl for port in self.portfolios)
+
+    @property
+    def total_open_pl_percent(self):
+        return (self.total_open_pl / self.total_open_cost_basis) * 100 if self.total_open_cost_basis else 0
+
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.name}', '{self.email}', '{self.password}', {self.year_eligible})"
