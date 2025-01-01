@@ -19,6 +19,10 @@ class Portfolio(db.Model):
     stocks: Mapped[list['Stock']] = db.relationship('Stock', back_populates='portfolio', lazy=True,
                                                     cascade='all, delete-orphan')
 
+    def __init__(self, name: str, user_id: int):
+        self.name = name
+        self.user_id = user_id
+
     @property
     def total_mkt_value(self):
         return sum(s.mkt_value for s in self.stocks)
@@ -34,10 +38,6 @@ class Portfolio(db.Model):
     @property
     def total_open_pl_percent(self):
         return (self.total_open_pl / self.total_open_cost_basis) * 100 if self.total_open_cost_basis > 0 else 0
-
-    def __init__(self, name: str, user_id: int):
-        self.name = name
-        self.user_id = user_id
 
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.name}')"

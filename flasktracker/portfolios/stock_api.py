@@ -16,7 +16,7 @@ def get_data(ticker: str):
 def get_price(ticker: str):
     ticker = ticker.upper()
     if ticker == "TEST.TO":
-        return {"market": 100, "change": 1.00}
+        return {"market": 200, "change": 1.00}
     if ".TO" in ticker:
         ticker = ticker.replace(".TO", ".TRT")
 
