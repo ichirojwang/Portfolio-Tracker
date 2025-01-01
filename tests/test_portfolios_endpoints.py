@@ -249,6 +249,31 @@ def test_port_transaction(app, client, auth):
             assert_transaction(db.session.get(StockTransaction, 4), "sell", "2024-12-27", "TEST2.TO", 4, 400, 0, 2)
 
 
+def test_port_transaction_multiple(app, client, auth):
+    with client.application.test_request_context():
+        auth.create()
+        auth.login()
+        auth.create_port("LeBrons port")
+        response = create_transaction(client)
+        assert response.status_code == 302
+        assert response.headers['Location'] == "/portfolio/1"
+        create_transaction(client, 1, "buy", "2024-12-26", "TEST2.TO", 5, 200)
+        create_transaction(client, 1, "sell", "2024-12-26", "TEST.TO", 3, 300)
+        create_transaction(client, 1, "sell", "2024-12-27", "TEST2.TO", 4, 400)
+
+        with app.app_context():
+            assert Stock.query.count() == 2
+            assert db.session.get(Stock, 1).ticker == "TEST.TO"
+            assert db.session.get(Stock, 2).ticker == "TEST2.TO"
+
+            assert StockTransaction.query.count() == 4
+
+            assert_transaction(db.session.get(StockTransaction, 1))
+            assert_transaction(db.session.get(StockTransaction, 2), "buy", "2024-12-26", "TEST2.TO", 5, 200, 0, 2)
+            assert_transaction(db.session.get(StockTransaction, 3), "sell", "2024-12-26", "TEST.TO", 3, 300, 0, 1)
+            assert_transaction(db.session.get(StockTransaction, 4), "sell", "2024-12-27", "TEST2.TO", 4, 400, 0, 2)
+
+
 def test_port_transaction_bad_fields(app, client, auth):
     with client.application.test_request_context():
         auth.create()

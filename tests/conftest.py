@@ -2,7 +2,6 @@ import pytest
 
 from flasktracker import create_app, db, bcrypt
 from flasktracker.config import TestConfig
-from flasktracker.portfolios.models import Portfolio
 from flasktracker.users.models import User
 
 
