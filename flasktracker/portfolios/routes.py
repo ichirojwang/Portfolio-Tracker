@@ -21,10 +21,12 @@ def portfolio_all():
     return render_template("portfolios.html", form=form)
 
 
-@portfolios.route('/portfolio/<int:port_id>', methods=["GET", "POST"])
+@portfolios.route('/portfolio/<int:port_id>')
 @login_required
 def portfolio(port_id: int):
-    port: Portfolio = Portfolio.query.get_or_404(port_id)
+    port: Portfolio = db.session.get(Portfolio, port_id)
+    if not port:
+        abort(404)
     if port.owner != current_user:
         abort(403)
     port_name_form = CreatePortfolioForm()
@@ -57,11 +59,14 @@ def update_portfolio_name():
 def delete_portfolio():
     port_id: int = request.form.get("port_id", -1)
     port, _ = validate_port(port_id=port_id)
-    # port: Portfolio = Portfolio.query.get_or_404(port_id)
     db.session.delete(port)
     db.session.commit()
     flash(f"Portfolio '{port.name}' deleted!", "success")
-    return redirect(url_for('portfolios.portfolios'))
+    return redirect(url_for('portfolios.portfolio_all'))
+
+
+def validate_transaction_type(value: str) -> bool:
+    return value in [item.value for item in StockTransactionType]
 
 
 @portfolios.route('/portfolio/transaction', methods=["POST"])
@@ -87,6 +92,9 @@ def portfolio_transaction():
             db.session.add(stock)
 
         # transaction type based on form input
+        if not validate_transaction_type(transaction_form.type.data):
+            flash("Invalid transaction type.", "warning")
+            return redirect(url_for('portfolios.portfolio', port_id=port.id))
         transaction_type = StockTransactionType(transaction_form.type.data)
 
         transaction: StockTransaction = StockTransaction(transaction_type,
@@ -94,7 +102,8 @@ def portfolio_transaction():
                                                          ticker,
                                                          transaction_form.quantity.data,
                                                          transaction_form.price.data,
-                                                         transaction_form.fees.data, stock.id)
+                                                         transaction_form.fees.data,
+                                                         stock.id)
         db.session.add(transaction)
         stock.transactions.append(transaction)
         db.session.commit()
@@ -129,16 +138,16 @@ def delete_transaction():
 @portfolios.route('/portfolio/stock/transaction/edit', methods=["POST"])
 @login_required
 def edit_transaction():
-    print("editting")
     port_id: int = request.form.get("port_id", -1)
     t_id: int = request.form.get("t_id", -1)
     port, t = validate_port(port_id=port_id, t_id=t_id)
     edit_form = PortfolioTransactionForm()
     if edit_form.validate_on_submit():
-        print("editting 2")
         ticker: str = edit_form.ticker.data.upper()
-        if t.ticker != ticker:
+        if t.ticker != ticker or not validate_transaction_type(edit_form.type.data):
             return redirect(url_for('portfolios.portfolio', port_id=port_id))
+        transaction_type = StockTransactionType(edit_form.type.data)
+        t.type = transaction_type
         t.date = edit_form.date.data
         t.quantity = edit_form.quantity.data
         t.price = edit_form.price.data

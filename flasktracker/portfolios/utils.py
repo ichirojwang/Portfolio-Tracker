@@ -1,24 +1,33 @@
 from flask import abort
 from flask_login import current_user
 
+from flasktracker import db
 from flasktracker.portfolios.models import Portfolio, Stock, StockTransaction
 
 
 def validate_port(port_id: int, s_id: int = -1, t_id: int = -1):
     if port_id in [None, -1]:
         abort(400)
-    port: Portfolio = Portfolio.query.get_or_404(port_id)
+    port: Portfolio = db.session.get(Portfolio, port_id)
+    if not port:
+        abort(404)
     if port.owner != current_user:
         abort(403)
 
     if s_id not in [None, -1]:
-        s = Stock.query.get_or_404(s_id)
+        s = db.session.get(Stock, s_id)
+        if not s:
+            abort(404)
         if s.portfolio.owner != current_user:
             abort(403)
         return port, s
 
     if t_id not in [None, -1]:
-        t = StockTransaction.query.get_or_404(t_id)
+        t = db.session.get(StockTransaction, t_id)
+        if not t:
+            abort(404)
+        print(t.stock.portfolio.owner)
+        print(current_user)
         if t.stock.portfolio.owner != current_user:
             abort(403)
         return port, t
