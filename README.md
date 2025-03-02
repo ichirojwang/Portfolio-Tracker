@@ -1,5 +1,7 @@
 # Portfolio Tracker
 
+# Currently refactoring to React frontend. Check "react" branch. 
+
 ## Description
 
 - This is a web app designed to help users manage their investment portfolios.
