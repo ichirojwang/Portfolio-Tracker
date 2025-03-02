@@ -1,6 +1,6 @@
 # Portfolio Tracker
 
-# Currently refactoring to React frontend. Check "react" branch. 
+### Currently refactoring to React frontend. Check "react" branch. 
 
 ## Description
 
