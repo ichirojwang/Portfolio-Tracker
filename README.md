@@ -1,6 +1,6 @@
 # Portfolio Tracker
 
-### Currently refactoring to React frontend. Check "react" branch. 
+#### Currently refactoring to React frontend. Check "react" branch. 
 
 ## Description
 
@@ -31,7 +31,7 @@
 
 - PostgreSQL (Production), SQLite (Early Development and Testing)
 
-## Unit Testing
+## Testing
 
-- Unit testing for this project was conducted using the pytest and unittest frameworks. The corresponding test cases can
+- Testing for this project was conducted using the pytest and unittest frameworks. The corresponding test cases can
   be found in the [tests](tests/) folder.
